@@ -20,11 +20,20 @@ class MalformedRequestException(ConeyException):
 
 
 class RemoteExecErrorException(ConeyException):
-    def __init__(self, details):
+    def __init__(self, value, details):
+        self._value = value
         self._details = details
 
     def __repr__(self):
-        return 'An error occurred during remote execution: {}'.format(self._details)
+        return 'An error occurred during remote execution: ({}) {}'.format(self._value, self._details)
+
+    @property
+    def value(self):
+        return self._value
+
+    @property
+    def details(self):
+        return self._details
 
 
 class RemoteUnhandledExceptionException(ConeyException):
@@ -33,3 +42,11 @@ class RemoteUnhandledExceptionException(ConeyException):
 
     def __repr__(self):
         return 'An unhandled exception was raised during remote execution: {}'.format(self._details)
+
+
+class DispatchHandlerException(ConeyException):
+    def __init__(self, code):
+        self.code = code
+
+    def __repr__(self):
+        return 'Error {} occurred during message dispatch'.format(self.code)
