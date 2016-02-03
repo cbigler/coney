@@ -33,7 +33,6 @@ class Request(object):
         else:
             return Request(version, metadata, args)
 
-    @staticmethod
-    def dumps(obj, serializer):
-        return serializer.dumps([obj.version, obj.metadata, obj.arguments])
+    def dumps(self, serializer):
+        return serializer.dumps([self.version, self.metadata, self.arguments])
 

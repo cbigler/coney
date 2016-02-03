@@ -39,6 +39,5 @@ class Response(object):
         else:
             return Response(rv, code, details)
 
-    @staticmethod
-    def dumps(obj, serializer):
-        return serializer.dumps([obj.return_value, obj.code, obj.details])
+    def dumps(self, serializer):
+        return serializer.dumps([self.return_value, self.code, self.details])
