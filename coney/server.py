@@ -4,6 +4,7 @@ import traceback
 
 from .compressors.null_compressor import NullCompressor
 from .exceptions import DispatchHandlerException, HandlerNotCallableException, RemoteExecErrorException
+from .request import Request
 from .response import Response
 from .response_codes import ResponseCodes
 from .serializers.msgpack_serializer import MsgpackSerializer
@@ -35,8 +36,8 @@ class Server(object):
             try:
                 body = self._compressor.decompress(raw_body)
 
-                message = self._serializer.loads(body)
-                if not message:
+                request = Request.loads(body, self._serializer)
+                if not request:
                     raise DispatchHandlerException(ResponseCodes.MALFORMED_REQUEST)
 
                 try:
@@ -46,11 +47,11 @@ class Server(object):
 
                 # Lookup the version specific handler
                 try:
-                    fn = method_versions[message.version]
+                    fn = method_versions[request.version]
                 except KeyError:
                     raise DispatchHandlerException(ResponseCodes.VERSION_NOT_FOUND)
 
-                return_value = fn(**message.parameters)
+                return_value = fn(**request.arguments)
 
                 resp = Response(return_value)
             except DispatchHandlerException as ex:
@@ -74,7 +75,7 @@ class Server(object):
                 properties=pika.BasicProperties(
                     correlation_id=props.correlation_id
                 ),
-                body=self._compressor.compress(resp.dumps(encoder=self._serializer))
+                body=self._compressor.compress(resp.dumps(self._serializer))
             )
 
             # Ack the message broker
