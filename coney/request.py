@@ -2,10 +2,10 @@ from .exceptions import MalformedRequestException
 
 
 class Request(object):
-    def __init__(self, version, metadata, **kwargs):
+    def __init__(self, version, metadata, arguments):
         self._version = version
         self._metadata = metadata
-        self._arguments = kwargs
+        self._arguments = arguments
 
     @property
     def version(self):
