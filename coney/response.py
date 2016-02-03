@@ -7,6 +7,9 @@ class Response(object):
         self._code = code
         self._details = details
 
+    def __repr__(self):
+        return 'Reply<return_value={}, code={}, details={}>'.format(self.return_value, self.code, self.details)
+
     @property
     def return_value(self):
         return self._return_value
