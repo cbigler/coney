@@ -50,3 +50,8 @@ class DispatchHandlerException(ConeyException):
 
     def __repr__(self):
         return 'Error {} occurred during message dispatch'.format(self.code)
+
+
+class HandlerNotCallableException(ConeyException):
+    def __repr__(self):
+        return 'Handler provided a non-callable object'
