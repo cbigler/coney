@@ -20,7 +20,7 @@ class Response(object):
         return self._details
 
     def __bool__(self):
-        return self.code != 0
+        return self.code == 0
 
     # python 2.x version of __bool__
     __nonzero__ = __bool__
