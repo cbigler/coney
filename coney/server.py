@@ -3,10 +3,11 @@ import pika
 import traceback
 
 from .compressors.null_compressor import NullCompressor
-from .exceptions import DispatchHandlerException, RemoteExecErrorException
+from .exceptions import DispatchHandlerException, HandlerNotCallableException, RemoteExecErrorException
 from .response import Response
 from .response_codes import ResponseCodes
 from .serializers.msgpack_serializer import MsgpackSerializer
+import utils
 
 logger = logging.getLogger(__name__)
 
@@ -83,7 +84,9 @@ class Server(object):
         self._channel.basic_consume(_dispatcher, queue=method_name)
 
     def register_handler(self, method_name, version, fn):
-        logger.info('Registering handler for [{}/{}]'.format(method_name, version))
+        if not utils.is_callable(fn):
+            raise HandlerNotCallableException()
+
         try:
             if version in self._queues[method_name]:
                 logger.warn('Duplicate handler registered for [{}/{}]').format(method_name, version)
