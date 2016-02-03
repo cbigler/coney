@@ -33,7 +33,7 @@ class ProxyBase(object):
     def _connect(self):
         self._connection = pika.BlockingConnection(parameters=self._conn_params)
         self._channel = self._connection.channel()
-        self._channel.basic_consume(self._response, no_ack=True, queue=constants.RABBITMQ_REPLYTO_QUEUE)
+        self._channel.basic_consume(self._response, no_ack=True, queue=constants.RABBIT_REPLYTO_QUEUE)
 
     def _response(self, ch, meth, props, body):
         if props.correlation_id == self._correlation_id:
@@ -53,7 +53,7 @@ class ProxyBase(object):
                     exchange='',
                     routing_key=method,
                     properties=pika.BasicProperties(
-                        reply_to=constants.RABBITMQ_REPLYTO_QUEUE,
+                        reply_to=constants.RABBIT_REPLYTO_QUEUE,
                         correlation_id=self._correlation_id
                     ),
                     body=compressed_value
