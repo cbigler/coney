@@ -11,6 +11,8 @@ from .serializers.msgpack_serializer import MsgpackSerializer
 import utils
 
 logger = logging.getLogger(__name__)
+pika_logger = logging.getLogger('pika')
+pika_logger.setLevel(logging.INFO)
 
 
 class Server(object):
