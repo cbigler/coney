@@ -84,7 +84,7 @@ class ProxyBase(object):
         metadata = self.generate_metadata()
         request = Request(version, metadata, kwargs)
         try:
-            str_request = request.dumps(self._serializer)
+            str_request = Request.dumps(request, self._serializer)
         except ValueError as ex:
             logger.error("Encoding error while serializing request: {}".format(request))
             return Response(None, ResponseCodes.REQUEST_ENCODING_FAILURE, ex)
