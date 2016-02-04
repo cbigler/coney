@@ -29,7 +29,8 @@ implementation, user supplied implementations are also supported.
 rich error messages to the caller.
 - exceptions thrown within RPC handlers are automatically caught and converted to a `Response`, you don't need
 to write extensive exception handlers in every method to ensure a stray exception won't crash your server.
-
+- The proxy base implements a re-connect mechanism so that a severed connection to RabbitMQ is re-established before a
+call is made (e.g. due to missed heartbeat for long-lived proxies)
 
 ## Examples
 For this example, we'll create a simple server which implements a couple of callable methods and
