@@ -36,8 +36,6 @@ server.run()
 
 ### Proxy/Client
 ```python
-#!/usr/bin/env python2
-
 import jackrabbit
 
 class ExampleProxy(jackrabbit.ProxyBase):
