@@ -10,6 +10,7 @@ from .request import Request
 from .response import Response
 from .response_codes import ResponseCodes
 from .serializers.msgpack_serializer import MsgpackSerializer
+import utils
 
 logger = logging.getLogger(__name__)
 
@@ -29,6 +30,8 @@ class ProxyBase(object):
 
         self._correlation_id = None
         self._response = None
+
+        self._call_timeout = call_timeout
 
     def _connect(self):
         self._connection = pika.BlockingConnection(parameters=self._conn_params)
@@ -68,9 +71,10 @@ class ProxyBase(object):
                     raise
 
         sleep_interval_seconds = 0.1
+        end_ts = utils.time() + self._call_timeout
         while not self._response:
-            # implement timeout check here
-            # if timeout: raise CallTimeoutException
+            if self._call_timeout and utils.time() >= end_ts:
+                raise CallTimeoutException()
             self._connection.sleep(sleep_interval_seconds)
 
         # Pull the response out and return it
