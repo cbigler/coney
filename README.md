@@ -23,7 +23,7 @@ we'll also create a proxy to remotely call the method.
 import jackrabbit
 
 def foo(arg1, arg2, arg3):
-    return arg1 + arg2 + arg3
+    return '{}:{}:{}'.format(arg1, arg2, arg3)
 
 def bar():
     return 42
