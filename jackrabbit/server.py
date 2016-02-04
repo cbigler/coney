@@ -16,7 +16,7 @@ pika_logger.setLevel(logging.INFO)
 
 
 class Server(object):
-    def __init__(self, uri, prefetch_count=1, serializer=MsgpackSerializer, compressor=NullCompressor):
+    def __init__(self, uri, prefetch_count=10, serializer=MsgpackSerializer, compressor=NullCompressor):
         self._serializer = serializer
         self._compressor = compressor
 
