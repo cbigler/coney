@@ -42,10 +42,10 @@ class ExampleProxy(jackrabbit.ProxyBase):
     def __init__(self, uri):
         super(ExampleProxy, self).__init__(uri)
 
-    def foo_v1(name, age, email):
+    def foo_v1(self, name, age, email):
         return self.exec_rpc('foo', 1, arg1=name, arg2=age, arg3=email)
 
-    def bar_v1():
+    def bar_v1(self):
         return self.exec_rpc('bar', 1)
 
 proxy = ExampleProxy('amqp://guest:guest@localhost/')
