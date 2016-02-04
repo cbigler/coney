@@ -20,7 +20,7 @@ to the caller.
 
 ### Additional Features
 - default transport serialization is through msgpack to minimize the size of data sent through RabbitMQ;
-other encodings can be used and the library includes a JSON serializer to assist in debugging. User supplied
+other encodings can be used and the library includes a JSON serializer to make debugging easier. User supplied
 serializers are also supported.
 - optional (off by default) compression of the data sent through RabbitMQ; jackrabbit comes with a zlib
 implementation, user supplied implementations are also supported.
