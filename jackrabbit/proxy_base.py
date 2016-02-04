@@ -16,6 +16,12 @@ logger = logging.getLogger(__name__)
 
 
 class ProxyBase(object):
+    """ProxyBase is the base class for jackrabbit remote procedure call (RPC) proxies.
+
+    The RPC proxy that marshals the method call through RabbitMQ is created by subclassing
+    :class:`ProxyBase` and adding methods that map to those registered on the server.
+    """
+
     def __init__(self, uri, call_timeout=30, serializer=MsgpackSerializer, compressor=NullCompressor,
                  reraise_remote_exceptions=False):
         self._uri = uri
