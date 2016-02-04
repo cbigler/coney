@@ -2,17 +2,33 @@
 Jackrabbit is a simple, light-weight remote procedure call (RPC) library for RabbitMQ.
 It includes tools for quickly building both RPC servers and client proxies.
 
+Remote calls are proxied through RabbitMQ in msgpack format, the server routes the request to the matching
+registered handler, and the return value is sent back across RabbitMQ and returned to the caller.
+
 ## Design Goals
 - quick and easy to get started
 - simple to use
 - fast and efficient
 
-Jackrabbit was designed as a transport implementation for a micro-service application bus. Remote calls
-are proxied through RabbitMQ in msgpack format, the server routes the request to the matching registered
-handler, and the return value is sent back across RabbitMQ and returned to the caller.
-
 ## Requirements
 - pika
+
+## Basic Features
+- create servers that implement remotely callable functionality
+- easily create proxy classes to remotely call methods
+
+### Additional Features
+- default transport serialization is through msgpack to minimize the size of data sent through RabbitMQ;
+other encodings can be used and the library includes a JSON serializer to assist in debugging. User supplied
+serializers are also supported.
+- optional (off by default) compression of the data sent through RabbitMQ; jackrabbit comes with a zlib
+implementation, user supplied implementations are also supported.
+- server prefetch count defaults to 10, but is configurable as a parameter when the `Server` is created.
+- dedicated error code, with method provided error details in the `Response` provides a mechanism to report
+rich error messages to the caller.
+- exceptions thrown within RPC handlers are automatically caught and converted to a `Response`, you don't need
+to write extensive exception handlers in every method to ensure a stray exception won't crash your server.
+
 
 ## Examples
 For this example, we'll create a simple server which implements a couple of callable methods and
