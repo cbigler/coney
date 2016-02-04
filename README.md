@@ -2,8 +2,9 @@
 Jackrabbit is a simple, light-weight remote procedure call (RPC) library for RabbitMQ.
 It includes tools for quickly building both RPC servers and client proxies.
 
-Remote calls are proxied through RabbitMQ in msgpack format, the server routes the request to the matching
-registered handler, and the return value is sent back across RabbitMQ and returned to the caller.
+Remote calls are proxied through RabbitMQ, the server routes the request to the matching
+registered handler, and the method's return value is sent back across RabbitMQ and returned
+to the caller.
 
 ## Design Goals
 - quick and easy to get started
