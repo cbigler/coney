@@ -36,6 +36,8 @@ server.run()
 
 ### Proxy/Client
 ```python
+#!/usr/bin/env python2
+
 import jackrabbit
 
 class ExampleProxy(jackrabbit.ProxyBase):
@@ -48,12 +50,19 @@ class ExampleProxy(jackrabbit.ProxyBase):
     def bar_v1(self):
         return self.exec_rpc('bar', 1)
 
-proxy = ExampleProxy('amqp://guest:guest@localhost/')
-resp = proxy.foo_v1(1, 'abc', ['xyz', '123'])
-if resp:
-    print('Success: {}'.format(resp.return_value))
+proxy = ExampleProxy('amqp://dev:dev@localhost/')
+
+response = proxy.foo_v1('John Doe', 41, 'john_doe@email.com')
+if response:
+    print('Success: {}'.format(response.return_value))
 else:
-    print('Error: ({}) {}'.format(resp.code, resp.details))
+    print('Error: ({}) {}'.format(response.code, response.details))
+
+response = proxy.bar_v1()
+if response:
+    print('Success: {}'.format(response.return_value))
+else:
+    print('Error: ({}) {}'.format(response.code, response.details))
 ```
 
 

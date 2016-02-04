@@ -4,11 +4,15 @@ import logging
 import sys
 
 
-def rpc_func(arg1):
-    return arg1 + 1
+def foo(arg1, arg2, arg3):
+    return '{}:{}:{}'.format(arg1, arg2, arg3)
 
+
+def bar():
+    return 42
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
-server = jackrabbit.Server('amqp://dev:dev@localhost/')
-server.register_handler('test', 1, rpc_func)
+server = jackrabbit.Server('amqp://guest:guest@localhost/')
+server.register_handler('foo', 1, foo)
+server.register_handler('bar', 1, bar)
 server.run()
