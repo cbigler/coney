@@ -1,9 +1,9 @@
 #!/usr/bin/env python2
 
-import coney
+import jackrabbit
 
 
-class ExampleProxy(coney.ProxyBase):
+class ExampleProxy(jackrabbit.ProxyBase):
     def __init__(self, uri):
         super(ExampleProxy, self).__init__(uri)
 
