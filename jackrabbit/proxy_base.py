@@ -102,7 +102,7 @@ class ProxyBase(object):
         try:
             str_response = self._call(method, str_request)
         except CallTimeoutException:
-            logger.warn("exec_rpc timeout: method={}, version={}, args={}".format(method, version, kwargs))
+            logger.warn("Timeout waiting for reply: method={}, version={}, args={}".format(method, version, kwargs))
             response = Response(None, ResponseCodes.CALL_REPLY_TIMEOUT)
         else:
             # Decode response and return
