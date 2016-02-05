@@ -66,7 +66,7 @@ class ExampleProxy(jackrabbit.ProxyBase):
     def bar_v1(self):
         return self.exec_rpc('bar', 1)
 
-proxy = ExampleProxy('amqp://dev:dev@localhost/')
+proxy = ExampleProxy('amqp://guest:guest@localhost/')
 
 response = proxy.foo_v1('John Doe', 41, 'john_doe@email.com')
 if response:
