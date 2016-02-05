@@ -16,6 +16,11 @@ pika_logger.setLevel(logging.INFO)
 
 
 class Server(object):
+    """
+    A Server connects to a RabbitMQ virtual host, creates the queues for the RPC requests, and
+    listens on those queues to handle messages. Incoming messages are routed to a matching
+    handler whose return value is returned to the RPC caller.
+    """
     def __init__(self, uri, prefetch_count=10, serializer=MsgpackSerializer, compressor=NullCompressor):
         self._serializer = serializer
         self._compressor = compressor
